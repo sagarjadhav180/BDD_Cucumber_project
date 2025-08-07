@@ -23,4 +23,9 @@ public class wait {
         webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
     }
 
+    public static void waitForElementToLoad(By xpath){
+        WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofMillis(3000) );
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(xpath));
+    }
+
 }
