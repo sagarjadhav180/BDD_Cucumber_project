@@ -20,7 +20,7 @@ public class DriverFactory {
         return driver;
     }
 
-    public static void tearDown(){
+    public static void quitDriver(){
         if(driver != null)
             driver.quit();
     }

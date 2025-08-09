@@ -2,6 +2,7 @@ package utils;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import org.testng.annotations.AfterTest;
 
 public class Hooks {
 
@@ -12,7 +13,7 @@ public class Hooks {
 
     @After
     public void tearDown(){
-        DriverFactory.tearDown();
+        DriverFactory.quitDriver();
     }
 
 }

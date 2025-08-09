@@ -16,12 +16,12 @@ public class BasicActions {
 
     @When("I open practise page")
     public void iOpenPractisePage() {
-
+        basicActionPage.openPractisePage();
     }
 
     @Then("Practise page should be displayed")
     public void practisePageShouldBeDisplayed() {
-        basicActionPage.openPractisePage();
+        basicActionPage.practicePageLabel();
     }
 
     @When("I click on {string} button")
@@ -52,5 +52,10 @@ public class BasicActions {
     @When("I click on {string} button with javascriptexecutor")
     public void iClickOnButtonWithJavascriptexecutor(String button) {
         basicActionPage.jsClickOnButton(button);
+    }
+
+    @Then("Login button should be displayed")
+    public void loginButtonShouldBeDisplayed() {
+        basicActionPage.loginButtonDisplayed();
     }
 }
