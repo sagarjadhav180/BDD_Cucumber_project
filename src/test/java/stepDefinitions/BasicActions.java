@@ -4,7 +4,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import pages.BasicActionPage;
 import pages.GooglePage;
 import utils.CommonUtils;
@@ -57,5 +59,44 @@ public class BasicActions {
     @Then("Login button should be displayed")
     public void loginButtonShouldBeDisplayed() {
         basicActionPage.loginButtonDisplayed();
+    }
+
+    @When("I Enter {string} in suggestion class example box")
+    public void iEnterInSuggestionClassExampleBox(String country) {
+        basicActionPage.enterCountryInAutoSuggestionBox(country);
+    }
+
+    @Then("{string} should be displayed in the list")
+    public void shouldBeDisplayedInTheList(String country) {
+        basicActionPage.isEnteredCountryPresentInTheList(country);
+    }
+
+    @When("I click on {string} option")
+    public void iClickOnOption(String country) {
+        basicActionPage.selectCountrydisplayedInTheList(country);
+    }
+
+    @Then("Country {string} should be selected in listbox")
+    public void countryShouldBeSelectedInListbox(String country) {
+    }
+
+    @When("I select {string} from dropdown")
+    public void iSelectFromDropdown(String option) {
+        basicActionPage.selectOptionFromDropDown(option);
+    }
+
+    @Then("Selected option {string} should be displayed")
+    public void selectedOptionShouldBeDisplayed(String option) {
+        basicActionPage.verifyIfOptionSelected(option);
+    }
+
+    @When("I select checkbox {string}")
+    public void iSelectCheckbox(String checkboxOption) {
+        basicActionPage.selectCheckBoxByvisibleText(checkboxOption);
+    }
+
+    @Then("Selected checkbox option {string} should be checked")
+    public void selectedCheckboxOptionShouldBeChecked(String checkboxOption) {
+        basicActionPage.verifySelectCheckBox(checkboxOption);
     }
 }

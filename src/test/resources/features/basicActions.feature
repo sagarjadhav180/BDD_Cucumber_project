@@ -1,28 +1,48 @@
 Feature: Basic Actions
 
   Scenario: Radio Buttons
-    When I open practise page
+    Given I open practise page
     Then Practise page should be displayed
     When I click on "radio1" Radio button
     Then "radio1" button should be checked
 
 
   Scenario: Scroll Function
-    When I open practise page
+    Given I open practise page
     Then Practise page should be displayed
     When I scroll down to Mouse Hover
     Then Mouse Hover button should be displayed on screen
 
 
   Scenario: Javascript click
-    When I open practise page
+    Given I open practise page
     Then Practise page should be displayed
     When I scroll down to Mouse Hover
     Then Mouse Hover button should be displayed on screen
     When I click on "Mouse Hover" button with javascriptexecutor
 
-  @Smoke
+
   Scenario: Fluent Wait
-    When I open practise page
+    Given I open practise page
     Then Login button should be displayed
+
+
+  Scenario: Autosuggestion handling
+    Given I open practise page
+    When I Enter "India" in suggestion class example box
+    Then "India" should be displayed in the list
+    When I click on "India" option
+#    Then Country "India" should be selected in listbox
+
+
+  Scenario: Dropdown handling
+    Given I open practise page
+    When I select "Option1" from dropdown
+    Then Selected option "Option1" should be displayed
+
+  @Smoke
+  Scenario: Checkbox handling
+    Given I open practise page
+    When I select checkbox "Option1"
+    Then Selected checkbox option "Option1" should be checked
 
