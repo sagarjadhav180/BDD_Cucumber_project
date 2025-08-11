@@ -9,6 +9,8 @@ import utils.wait;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
 public class BasicActionPage {
 
@@ -18,6 +20,11 @@ public class BasicActionPage {
     By LoginButton = By.xpath("//button[text()='Login']");
     By autoSuggestionTextBox = By.xpath("//input[@id='autocomplete']");
     By dropDown = By.xpath("//select[@id='dropdown-class-example']");
+    By openWindowButton = By.xpath("//button[text()='Open Window']");
+    By openTab = By.xpath("//a[text()='Open Tab']");
+    By logoImage = By.xpath("(//img[@alt='Logo'])[1]");
+    By alertTextBox = By.xpath("//input[@placeholder='Enter Your Name']");
+    By alertButton = By.xpath("//input[@value='Alert']");
 
     static {
         driver = DriverFactory.getDriver();
@@ -107,6 +114,63 @@ public class BasicActionPage {
         String xpath  = "//div[@id='checkbox-example']//input[@value='"+checkBox.toLowerCase()+"']";
         Assert.assertTrue(driver.findElement(By.xpath(xpath)).isSelected());
     }
+
+    public void clickOnOpenWindowButton(){
+        driver.findElement(openWindowButton).click();
+    }
+
+    public void verifyIfNewWindowOpened(String windowTitle){
+        Set<String> windows = driver.getWindowHandles();
+        String parentWindow = driver.getWindowHandle();
+
+        Iterator<String> itr = windows.iterator();
+        while(itr.hasNext()){
+            String childWindowId = itr.next();
+            if(!childWindowId.equals(parentWindow))
+                driver.switchTo().window(childWindowId);
+        }
+
+        Assert.assertTrue(driver.getTitle().contains(windowTitle));
+    }
+
+    public void switchToParentWindow(){
+        String parentWindow = driver.getWindowHandle();
+        driver.switchTo().window(parentWindow);
+    }
+
+    public void clickOnOpenTab(){
+        driver.findElement(openTab).click();
+        Set<String> windows = driver.getWindowHandles();
+        String parentWindow = driver.getWindowHandle();
+
+        Iterator<String> itr = windows.iterator();
+        while(itr.hasNext()){
+            String childWindowId = itr.next();
+            if(!childWindowId.equals(parentWindow))
+                driver.switchTo().window(childWindowId);
+        }
+    }
+
+    public void verifyIfLogoIsDisplayed(){
+        Assert.assertTrue(driver.findElement(logoImage).isDisplayed());
+    }
+
+    public void inputNameInAlertTextbox(String alertName){
+        driver.findElement(alertTextBox).sendKeys(alertName);
+    }
+
+    public void clickOnAlertButton(){
+        driver.findElement(alertButton).click();
+    }
+
+    public void verifyAlertMessage(String expectedAlertMessage){
+        String actualAlertMessage = driver.switchTo().alert().getText();
+
+        Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Expected alert message not displayed. Alert message displayed is --> "+actualAlertMessage);
+        driver.switchTo().alert().accept();
+    }
+
+
 
 
 

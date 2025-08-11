@@ -40,9 +40,26 @@ Feature: Basic Actions
     When I select "Option1" from dropdown
     Then Selected option "Option1" should be displayed
 
-  @Smoke
+
   Scenario: Checkbox handling
     Given I open practise page
     When I select checkbox "Option1"
     Then Selected checkbox option "Option1" should be checked
 
+  Scenario: Window Handling
+    Given I open practise page
+    When I click on Open Window button
+    Then New window should be opened with title "QAClick Academy"
+    When I switch back to Parent window
+
+  Scenario: Switch Tab handling
+    Given I open practise page
+    When I click on Open Tab
+    Then Verify if new tab is opened
+
+  @Smoke
+  Scenario: Alert handling
+    Given I open practise page
+    When I enter alert name "Sagar"
+    And Click on Alert button
+    Then alert pop should be displayed with message "Hello Sagar, share this practice page and share your knowledge"

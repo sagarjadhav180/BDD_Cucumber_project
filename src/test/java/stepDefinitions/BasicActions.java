@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -92,11 +93,52 @@ public class BasicActions {
 
     @When("I select checkbox {string}")
     public void iSelectCheckbox(String checkboxOption) {
-        basicActionPage.selectCheckBoxByvisibleText(checkboxOption);
+        basicActionPage.selectCheckBoxByVisibleText(checkboxOption);
     }
 
     @Then("Selected checkbox option {string} should be checked")
     public void selectedCheckboxOptionShouldBeChecked(String checkboxOption) {
-        basicActionPage.verifySelectCheckBox(checkboxOption);
+        basicActionPage.verifySelectCheckBoxByVisibleText(checkboxOption);
+    }
+
+    @When("I click on Open Window button")
+    public void iClickOnOpenWindowButton() {
+        basicActionPage.clickOnOpenWindowButton();
+    }
+
+    @Then("New window should be opened with title {string}")
+    public void newWindowShouldBeOpenedWithTitle(String title) {
+        basicActionPage.verifyIfNewWindowOpened(title);
+    }
+
+    @When("I switch back to Parent window")
+    public void iSwitchBackToParentWindow() {
+        basicActionPage.switchToParentWindow();
+    }
+
+    @When("I click on Open Tab")
+    public void iClickOnOpenTab() {
+        basicActionPage.clickOnOpenTab();
+    }
+
+
+    @Then("Verify if new tab is opened")
+    public void verifyIfNewTabIsOpened() {
+       basicActionPage.verifyIfLogoIsDisplayed();
+    }
+
+    @When("I enter alert name {string}")
+    public void iEnterAlertName(String alertName) {
+        basicActionPage.inputNameInAlertTextbox(alertName);
+    }
+
+    @And("Click on Alert button")
+    public void clickOnAlertButton() {
+        basicActionPage.clickOnAlertButton();
+    }
+
+    @Then("alert pop should be displayed with message {string}")
+    public void alertPopShouldBeDisplayedWithMessage(String expectedMessage) {
+        basicActionPage.verifyAlertMessage(expectedMessage);
     }
 }
