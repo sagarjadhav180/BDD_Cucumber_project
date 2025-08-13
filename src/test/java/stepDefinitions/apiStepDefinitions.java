@@ -4,24 +4,15 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import model.AppleMacBookDetails;
 import model.MachineDetails;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.Assert;
 import utils.HTTPHelper;
-import utils.RequestSetup;
 import utils.ResponseHandler;
 import utils.jsonReader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.List;
 import java.util.Map;
 
