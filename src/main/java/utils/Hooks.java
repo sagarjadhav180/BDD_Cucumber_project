@@ -8,7 +8,7 @@ public class Hooks {
 
     @Before
     public void setup(){
-        DriverFactory.getDriver();
+//        DriverFactory.getDriver();
     }
 
     @After

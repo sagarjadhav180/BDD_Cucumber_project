@@ -9,7 +9,7 @@ import io.cucumber.testng.CucumberOptions;
         glue = {"stepDefinitions", "utils"},
         plugin = {"pretty", "html:target/cucumber-report.html"},
         monochrome = true,
-        tags = "@Smoke"
+        tags = "@api"
 )
 
 public class TestRunner extends AbstractTestNGCucumberTests {
