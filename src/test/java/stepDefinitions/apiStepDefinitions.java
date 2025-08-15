@@ -13,10 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.Assert;
-import utils.HTTPHelper;
-import utils.RequestSetup;
-import utils.ResponseHandler;
-import utils.jsonReader;
+import utils.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +27,7 @@ public class apiStepDefinitions {
     private HTTPHelper httpHelper;
     private String machineId;
 
-    public apiStepDefinitions(){
+    public apiStepDefinitions() {
         this.httpHelper = new HTTPHelper();
     }
 
@@ -42,7 +39,7 @@ public class apiStepDefinitions {
 
     @And("I must be able to see all the objects")
     public void iMustBeAbleToSeeAllTheObjects(DataTable dataTable) {
-        MachineDetails  machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, MachineDetails.class);
+        MachineDetails machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, MachineDetails.class);
         System.out.println("===============================");
         System.out.println(machineDetail);
         System.out.println("===============================");
@@ -76,9 +73,9 @@ public class apiStepDefinitions {
 
     @And("I must be able to see newly created object")
     public void iMustBeAbleToSeeNewlyCreatedObject(DataTable dataTable) {
-        AppleMacBookDetails  machineDetails = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
+        AppleMacBookDetails machineDetails = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
         List<Map<String, String>> rows = dataTable.asMaps();
-        for(Map<String, String>row : rows){
+        for (Map<String, String> row : rows) {
             Assert.assertEquals(machineDetails.getName(), row.get("name"),
                     "Names are not matching. Actual name is " + machineDetails.getName());
 
@@ -100,13 +97,65 @@ public class apiStepDefinitions {
     @Given("I make a {string} request to create machine data using {string}")
     public void iMakeARequestToCreateMachineDataUsing(String requsetType, String jsonFile) {
         String payload = jsonReader.readFromJson(jsonFile);
-        httpHelper.response = HTTPHelper.POST(payload,"objects");
-        AppleMacBookDetails  machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
+        httpHelper.response = HTTPHelper.POST(payload, "objects");
+        AppleMacBookDetails machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
         this.machineId = machineDetail.getId();
     }
 
     @And("I make request to {string} to view newly created objects")
     public void iMakeRequestToToViewNewlyCreatedObjects(String pathParam) {
-        httpHelper.response  = httpHelper.GET(pathParam.concat("/").concat(this.machineId));
+        httpHelper.response = httpHelper.GET(pathParam.concat("/").concat(this.machineId));
+    }
+
+    @Given("I make a {string} request to create machine data using data from excel file for scenario {string}")
+    public void iMakeARequestToCreateMachineDataUsingDataFromExcelFileForScenario(String requsetType, String ScenarioName) throws IOException {
+        Map<String, String> map = excelReader.getData(ScenarioName);
+        String payload = map.get("requestbody");
+        httpHelper.response = HTTPHelper.POST(payload, "objects");
+        AppleMacBookDetails machineDetails = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
+        this.machineId = machineDetails.getId();
+    }
+
+    @And("I must be able to see newly created object using jsonpath")
+    public void iMustBeAbleToSeeNewlyCreatedObjectUsingJsonpath(DataTable dataTable) {
+        String name = httpHelper.response.jsonPath().getString("name");
+        String year = httpHelper.response.jsonPath().getString("data.year");
+        String price = httpHelper.response.jsonPath().getString("data.price");
+        String cpuModel = httpHelper.response.jsonPath().getString("data['CPU model']");
+        String diskSize = httpHelper.response.jsonPath().getString("data['Hard disk size']");
+
+        List<Map<String, String>> rows = dataTable.asMaps();
+        for (Map<String, String> row : rows) {
+            Assert.assertEquals(
+                    name,
+                    row.get("name"),
+                    String.format("Names do not match. Expected: %s, Actual: %s", row.get("name"), name)
+            );
+
+            Assert.assertEquals(
+                    year,
+                    row.get("year"),
+                    String.format("Years do not match. Expected: %s, Actual: %s", row.get("year"), year)
+            );
+
+            Assert.assertEquals(
+                    price,
+                    row.get("price"),
+                    String.format("Prices do not match. Expected: %s, Actual: %s", row.get("price"), price)
+            );
+
+            Assert.assertEquals(
+                    cpuModel,
+                    row.get("CPU model"),
+                    String.format("CPU models do not match. Expected: %s, Actual: %s", row.get("CPU model"), cpuModel)
+            );
+
+            Assert.assertEquals(
+                    diskSize,
+                    row.get("Hard disk size"),
+                    String.format("Hard disk sizes do not match. Expected: %s, Actual: %s", row.get("Hard disk size"), diskSize)
+            );
+        }
+
     }
 }

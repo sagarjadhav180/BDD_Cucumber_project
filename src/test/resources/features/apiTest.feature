@@ -11,8 +11,8 @@ Feature: CRUD operations
       | id | name           | Generation | Price  | Capacity |
       | 12 | Apple iPad Air | 4th        | 419.99 | 64 GB    |
 
-  @api
-  Scenario Outline: POST call
+  @JsonFile
+  Scenario Outline: POST call using data from json file
     Given I make a "POST" request to create machine data using "<JSONFile>"
     Then I must get response code "200"
     And I make request to "/objects/" to view newly created objects
@@ -21,6 +21,32 @@ Feature: CRUD operations
       | name   | year   | price   | CPU model   | Hard disk size   |
       | <name> | <year> | <price> | <CPU model> | <Hard disk size> |
     Examples:
-      | JSONFile          |  | name                 | year | price   | CPU model     | Hard disk size |
-      | appleMacBook.json |  | Apple MacBook Pro 16 | 2019 | 1849.99 | Intel Core i9 | 1 TB           |
+      | JSONFile          | name                 | year | price   | CPU model     | Hard disk size |
+      | appleMacBook.json | Apple MacBook Pro 16 | 2019 | 1849.99 | Intel Core i9 | 1 TB           |
 
+  @ExcelData
+  Scenario Outline: POST call using data from json file
+    Given I make a "POST" request to create machine data using data from excel file for scenario "<scenario>"
+    Then I must get response code "200"
+    And I make request to "/objects/" to view newly created objects
+    Then I must get response code "200"
+    And I must be able to see newly created object
+      | name   | year   | price   | CPU model   | Hard disk size   |
+      | <name> | <year> | <price> | <CPU model> | <Hard disk size> |
+    Examples:
+      | scenario        | name                 | year | price   | CPU model     | Hard disk size |
+      | addMacbookEntry | Apple MacBook Pro 16 | 2020 | 1949.99 | Intel Core i9 | 1 TB           |
+
+
+  @Jsonpath
+  Scenario Outline: POST call using data from json file
+    Given I make a "POST" request to create machine data using "<JSONFile>"
+    Then I must get response code "200"
+    And I make request to "/objects/" to view newly created objects
+    Then I must get response code "200"
+    And I must be able to see newly created object using jsonpath
+      | name   | year   | price   | CPU model   | Hard disk size   |
+      | <name> | <year> | <price> | <CPU model> | <Hard disk size> |
+    Examples:
+      | JSONFile          | name                 | year | price   | CPU model     | Hard disk size |
+      | appleMacBook.json | Apple MacBook Pro 16 | 2019 | 1849.99 | Intel Core i9 | 1 TB           |
