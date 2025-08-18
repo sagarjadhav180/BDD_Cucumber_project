@@ -9,18 +9,17 @@ import java.util.Arrays;
 
 public class DriverFactory {
 
-    private static WebDriver driver;
+    public WebDriver driver;
 
-    public static WebDriver getDriver(){
-        if(driver == null){
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
-        }
-        return driver;
+    public DriverFactory(){
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        WaitUtil.init(driver);
+        CommonUtils.init(driver);
     }
 
-    public static void quitDriver(){
+    public void quitDriver(){
         if(driver != null)
             driver.quit();
     }

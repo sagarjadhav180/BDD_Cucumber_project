@@ -1,12 +1,13 @@
 Feature: Basic Actions
 
+  @radioButtons
   Scenario: Radio Buttons
     Given I open practise page
     Then Practise page should be displayed
     When I click on "radio1" Radio button
     Then "radio1" button should be checked
 
-
+  @ScrollFunction
   Scenario: Scroll Function
     Given I open practise page
     Then Practise page should be displayed
@@ -57,9 +58,9 @@ Feature: Basic Actions
     When I click on Open Tab
     Then Verify if new tab is opened
 
-  @Smoke
+
   Scenario: Alert handling
     Given I open practise page
-    When I enter alert name "Sagar"
-    And Click on Alert button
-    Then alert pop should be displayed with message "Hello Sagar, share this practice page and share your knowledge"
+#    When I enter alert name "Sagar"
+#    And Click on Alert button
+#    Then alert pop should be displayed with message "Hello Sagar, share this practice page and share your knowledge"

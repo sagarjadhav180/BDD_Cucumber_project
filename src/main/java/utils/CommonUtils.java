@@ -14,13 +14,17 @@ import javax.xml.xpath.XPath;
 public class CommonUtils {
 
 
-    static JavascriptExecutor javascriptExecutor ;
-    static WebDriver driver;
+    private static JavascriptExecutor javascriptExecutor ;
+    private static WebDriver driver;
 
-    static {
-        driver = DriverFactory.getDriver();
-        javascriptExecutor = (JavascriptExecutor) driver;
+
+    public static void init(WebDriver driverInstance) {
+        if (driver == null) {
+            driver = driverInstance;
+        }
+        javascriptExecutor = (JavascriptExecutor)driver;
     }
+    
 
     public static void scrollIntoView(By xPath){
         javascriptExecutor.executeScript("arguments[0].scrollIntoView(true)",driver.findElement(xPath));

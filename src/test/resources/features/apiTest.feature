@@ -1,6 +1,7 @@
 Feature: CRUD operations
 
 
+  @api_suite
   Scenario Outline: GET call
     Given I make request to "/objects/12" to view objects
     Then I must get response code "200"
@@ -11,7 +12,7 @@ Feature: CRUD operations
       | id | name           | Generation | Price  | Capacity |
       | 12 | Apple iPad Air | 4th        | 419.99 | 64 GB    |
 
-  @JsonFile
+  @api_suite
   Scenario Outline: POST call using data from json file
     Given I make a "POST" request to create machine data using "<JSONFile>"
     Then I must get response code "200"
@@ -24,7 +25,7 @@ Feature: CRUD operations
       | JSONFile          | name                 | year | price   | CPU model     | Hard disk size |
       | appleMacBook.json | Apple MacBook Pro 16 | 2019 | 1849.99 | Intel Core i9 | 1 TB           |
 
-  @ExcelData
+  @api_suite
   Scenario Outline: POST call using data from json file
     Given I make a "POST" request to create machine data using data from excel file for scenario "<scenario>"
     Then I must get response code "200"
@@ -38,7 +39,7 @@ Feature: CRUD operations
       | addMacbookEntry | Apple MacBook Pro 16 | 2020 | 1949.99 | Intel Core i9 | 1 TB           |
 
 
-  @Jsonpath
+  @api_suite
   Scenario Outline: POST call using data from json file
     Given I make a "POST" request to create machine data using "<JSONFile>"
     Then I must get response code "200"

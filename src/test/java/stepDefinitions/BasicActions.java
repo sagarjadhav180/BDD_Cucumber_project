@@ -11,10 +11,19 @@ import org.testng.Assert;
 import pages.BasicActionPage;
 import pages.GooglePage;
 import utils.CommonUtils;
+import utils.DriverFactory;
 
 public class BasicActions {
 
-    BasicActionPage basicActionPage = new BasicActionPage();
+    private DriverFactory driverFactory;
+    private BasicActionPage basicActionPage;
+
+    public BasicActions(DriverFactory driverFactory){
+        this.driverFactory = driverFactory;
+        basicActionPage = new BasicActionPage(this.driverFactory.driver);
+
+    }
+
 
 
     @When("I open practise page")

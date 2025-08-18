@@ -9,6 +9,8 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.AppleMacBookDetails;
 import model.MachineDetails;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,8 +24,11 @@ import java.nio.Buffer;
 import java.util.List;
 import java.util.Map;
 
+import static com.aventstack.extentreports.reporter.configuration.ViewName.LOG;
+
 public class apiStepDefinitions {
 
+    private static final Logger LOG = LogManager.getLogger(apiStepDefinitions.class);
     private HTTPHelper httpHelper;
     private String machineId;
 
@@ -97,9 +102,12 @@ public class apiStepDefinitions {
     @Given("I make a {string} request to create machine data using {string}")
     public void iMakeARequestToCreateMachineDataUsing(String requsetType, String jsonFile) {
         String payload = jsonReader.readFromJson(jsonFile);
+        LOG.info("=====Payload====="+payload+"================");
         httpHelper.response = HTTPHelper.POST(payload, "objects");
         AppleMacBookDetails machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
         this.machineId = machineDetail.getId();
+        LOG.info("=====Machine id===== "+this.machineId+" ================");
+
     }
 
     @And("I make request to {string} to view newly created objects")
@@ -114,6 +122,7 @@ public class apiStepDefinitions {
         httpHelper.response = HTTPHelper.POST(payload, "objects");
         AppleMacBookDetails machineDetails = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
         this.machineId = machineDetails.getId();
+        LOG.info("====Machine id -> "+ this.machineId+" ======");
     }
 
     @And("I must be able to see newly created object using jsonpath")
@@ -123,6 +132,12 @@ public class apiStepDefinitions {
         String price = httpHelper.response.jsonPath().getString("data.price");
         String cpuModel = httpHelper.response.jsonPath().getString("data['CPU model']");
         String diskSize = httpHelper.response.jsonPath().getString("data['Hard disk size']");
+
+        LOG.info("====name "+name+" =========");
+        LOG.info("====year "+year+" =========");
+        LOG.info("====price "+price+" =========");
+        LOG.info("====cpuModel "+cpuModel+" =========");
+        LOG.info("====diskSize "+diskSize+" =========");
 
         List<Map<String, String>> rows = dataTable.asMaps();
         for (Map<String, String> row : rows) {

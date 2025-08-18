@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import org.testng.Assert;
 import utils.CommonUtils;
 import utils.DriverFactory;
-import utils.wait;
+import utils.WaitUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class BasicActionPage {
 
-    static WebDriver driver;
+    private WebDriver driver;
     By PracticePageLabel = By.xpath("//h1[text()='Practice Page']");
     By MouseHoverButton = By.xpath("//button[text()='Mouse Hover']");
     By LoginButton = By.xpath("//button[text()='Login']");
@@ -26,8 +26,8 @@ public class BasicActionPage {
     By alertTextBox = By.xpath("//input[@placeholder='Enter Your Name']");
     By alertButton = By.xpath("//input[@value='Alert']");
 
-    static {
-        driver = DriverFactory.getDriver();
+    public BasicActionPage(WebDriver driver) {
+        this.driver = driver;
     }
 
     public void openPractisePage(){
@@ -35,7 +35,7 @@ public class BasicActionPage {
     }
 
     public void practicePageLabel(){
-        wait.waitForElementToLoad(PracticePageLabel);
+        WaitUtil.waitForElementToLoad(PracticePageLabel);
     }
 
     public void clickOnRadioButton(String button){
@@ -69,11 +69,11 @@ public class BasicActionPage {
     }
 
     public void loginButtonDisplayed(){
-        wait.fluentWaitForElementTobeDisplayed(LoginButton);
+        WaitUtil.fluentWaitForElementTobeDisplayed(LoginButton);
     }
 
     public void enterCountryInAutoSuggestionBox(String country){
-        wait.waitForElementToLoad(autoSuggestionTextBox);
+        WaitUtil.waitForElementToLoad(autoSuggestionTextBox);
         driver.findElement(autoSuggestionTextBox).sendKeys(country);
     }
 

@@ -7,14 +7,16 @@ import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
-public class wait {
+public class WaitUtil {
 
-    static WebDriver driver;
-
-    static {
-        driver = DriverFactory.getDriver();
+    private static WebDriver driver;
+    
+    public static void init(WebDriver driverInstance) {
+        if (driver == null) {
+            driver = driverInstance;
+        }
     }
-
+    
     //explicit wait
     public static void waitForElementToLoad(String xpath){
         WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofMillis(3000) );
