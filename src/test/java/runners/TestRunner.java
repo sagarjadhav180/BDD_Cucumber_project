@@ -4,6 +4,7 @@ package runners;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.DataProvider;
 import utils.EmailUtil;
 
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import java.util.Arrays;
                 "utils.Listener"
         },
         monochrome = true,
-        tags = "@ScrollFunction"
+        tags = "@iframeHandling"
 )
 
 public class TestRunner extends AbstractTestNGCucumberTests {
@@ -29,6 +30,11 @@ public class TestRunner extends AbstractTestNGCucumberTests {
         private void sendEmail(){
                 EmailUtil.sendReportEmail("sagar.jadhav180@gmail.com", reportPath);
 
+        }
+
+        @DataProvider(parallel = true)
+        public Object[][] scenarios(){
+                return  super.scenarios();
         }
 
 }

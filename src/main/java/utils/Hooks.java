@@ -7,11 +7,12 @@ import org.testng.annotations.AfterTest;
 
 public class Hooks {
 
-    private DriverFactory driverFactory;
+    private final DriverFactory driverFactory;
 
 
     public Hooks(DriverFactory driverFactory){
         this.driverFactory = driverFactory;
+        System.out.println("=========Browser launched=====================");
     }
 
 //    @Before
@@ -21,6 +22,7 @@ public class Hooks {
 
     @After
     public void tearDown(){
+        System.out.println("======Closing all browser instances=======");
         driverFactory.quitDriver();
     }
 

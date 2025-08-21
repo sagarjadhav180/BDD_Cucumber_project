@@ -25,6 +25,10 @@ public class BasicActionPage {
     By logoImage = By.xpath("(//img[@alt='Logo'])[1]");
     By alertTextBox = By.xpath("//input[@placeholder='Enter Your Name']");
     By alertButton = By.xpath("//input[@value='Alert']");
+    By mentorShipTile = By.xpath("//a[text()='Mentorship']");
+    String mentorShipTitle = ("//h1[text()='Mentorship']");
+//    By iframe = By.xpath("//iframe[@id='courses-iframe']");
+    private final String frameId = "courses-iframe";
 
     public BasicActionPage(WebDriver driver) {
         this.driver = driver;
@@ -170,7 +174,41 @@ public class BasicActionPage {
         driver.switchTo().alert().accept();
     }
 
+    public void scrollToTheCourse(String courseName){
+        By courseElement = By.xpath("//td[text()='" + courseName + "']");
+        CommonUtils.scrollIntoView(courseElement);
+    }
 
+    public void viewPrice(String courseName, String price){
+        By priceElement = By.xpath("//td[text()='" + courseName + "']//following-sibling::td");
+        String actualPrice = driver.findElement(priceElement).getText();
+        Assert.assertEquals(actualPrice, price, "actual price is not expected. Actual Price is --> "+actualPrice);
+    }
+
+    public void scrollToFootballer(String footballer){
+        By footballerElement = (By.xpath("(//table[@id='product'])[2]//tr//td[text()='" + footballer + "']"));
+        CommonUtils.scrollIntoView(footballerElement);
+    }
+
+    public String getAmount(String footballer){
+        return driver.findElement(By.xpath("(//table[@id='product'])[2]//tr//td[text()='"+footballer+"']/parent::tr//td[position()=4]")).getText();
+    }
+
+    public void clickOnMentorShipTile(){
+        driver.findElement(mentorShipTile).click();
+    }
+
+    public Boolean mentorShipTitleVisible(){
+        return  WaitUtil.waitForElementToLoad(mentorShipTitle);
+    }
+
+    public void scrollToMentorShipTile(){
+        CommonUtils.scrollIntoView(mentorShipTile);
+    }
+
+    public void switchToIframe(){
+        CommonUtils.switchToiFrame(frameId);
+    }
 
 
 

@@ -150,4 +150,46 @@ public class BasicActions {
     public void alertPopShouldBeDisplayedWithMessage(String expectedMessage) {
         basicActionPage.verifyAlertMessage(expectedMessage);
     }
+
+    @When("I scroll down to the course {string}")
+    public void iScrollDownToTheCourse(String courseName) {
+        basicActionPage.scrollToTheCourse(courseName);
+    }
+
+    @Then("I should be able to see the {string} of the {string}")
+    public void iShouldBeAbleToSeeTheOfThe(String courseName, String price) {
+        basicActionPage.viewPrice(courseName, price);
+    }
+
+    @When("I scroll down to the {string}")
+    public void iScrollDownToThe(String footballer) {
+        basicActionPage.scrollToFootballer(footballer);
+    }
+
+    @Then("I should be able to see the {string} {string}")
+    public void iShouldBeAbleToSeeThe(String footballer, String amount) {
+        String actualAmount = basicActionPage.getAmount(footballer);
+        Assert.assertEquals(actualAmount, amount, "Actual amount is not matching with expected. Actual amount is --> "+actualAmount);
+    }
+
+    @When("I scroll down to {string} tile in courses section")
+    public void iScrollDownToTileInCoursesSection(String arg0) {
+        basicActionPage.scrollToMentorShipTile();
+    }
+
+    @Then("I should be able to see mentorship title")
+    public void iShouldBeAbleToSeeMentorshipTitle() {
+        Boolean actualFlag = basicActionPage.mentorShipTitleVisible();
+        Assert.assertTrue(actualFlag, "MentorShip Title is not visible");
+    }
+
+    @And("I Click on mentorship tile")
+    public void iClickOnMentorshipTile() {
+        basicActionPage.clickOnMentorShipTile();
+    }
+
+    @When("I switch to iframe")
+    public void iSwitchToIframe() {
+        basicActionPage.switchToIframe();
+    }
 }

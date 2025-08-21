@@ -18,9 +18,18 @@ public class WaitUtil {
     }
     
     //explicit wait
-    public static void waitForElementToLoad(String xpath){
-        WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofMillis(3000) );
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
+    public static Boolean waitForElementToLoad(String xpath){
+        Boolean flag = null;
+        try{
+            WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofMillis(3000) );
+            webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));  
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+            throw new RuntimeException(xpath+" Element not loaded");
+        }finally {
+            return flag;
+        }
     }
 
     public static void waitForElementToLoad(By xpath){

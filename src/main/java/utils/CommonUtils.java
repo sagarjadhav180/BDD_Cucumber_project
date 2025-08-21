@@ -16,6 +16,7 @@ public class CommonUtils {
 
     private static JavascriptExecutor javascriptExecutor ;
     private static WebDriver driver;
+    private static Actions actions = null;
 
 
     public static void init(WebDriver driverInstance) {
@@ -23,6 +24,7 @@ public class CommonUtils {
             driver = driverInstance;
         }
         javascriptExecutor = (JavascriptExecutor)driver;
+        actions = new Actions(driver);
     }
     
 
@@ -35,7 +37,6 @@ public class CommonUtils {
     }
 
     public static void mouseHoverAndClick(WebElement webElement){
-        Actions actions = new Actions(driver);
         actions.moveToElement(webElement).click().perform();
     }
 
@@ -54,6 +55,10 @@ public class CommonUtils {
         }
         else
             return flag = false;
+    }
+
+    public static void switchToiFrame(String frameId){
+        driver.switchTo().frame(frameId);
     }
 
 
