@@ -6,10 +6,20 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.GooglePage;
+import utils.DriverFactory;
 
 public class MyStepdefs {
 
-    GooglePage googlePage = new GooglePage();
+
+    private DriverFactory driverFactory;
+    private GooglePage googlePage;
+
+    public MyStepdefs(){
+        this.driverFactory = new DriverFactory();
+        this.googlePage = new GooglePage(driverFactory.driver);
+    }
+
+
 
     @Given("I open Google page")
     public void i_open_the_google_page() {

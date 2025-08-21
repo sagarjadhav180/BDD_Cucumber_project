@@ -14,13 +14,19 @@ import javax.xml.xpath.XPath;
 public class CommonUtils {
 
 
-    static JavascriptExecutor javascriptExecutor ;
-    static WebDriver driver;
+    private static JavascriptExecutor javascriptExecutor ;
+    private static WebDriver driver;
+    private static Actions actions = null;
 
-    static {
-        driver = DriverFactory.getDriver();
-        javascriptExecutor = (JavascriptExecutor) driver;
+
+    public static void init(WebDriver driverInstance) {
+        if (driver == null) {
+            driver = driverInstance;
+        }
+        javascriptExecutor = (JavascriptExecutor)driver;
+        actions = new Actions(driver);
     }
+    
 
     public static void scrollIntoView(By xPath){
         javascriptExecutor.executeScript("arguments[0].scrollIntoView(true)",driver.findElement(xPath));
@@ -31,7 +37,6 @@ public class CommonUtils {
     }
 
     public static void mouseHoverAndClick(WebElement webElement){
-        Actions actions = new Actions(driver);
         actions.moveToElement(webElement).click().perform();
     }
 
@@ -50,6 +55,10 @@ public class CommonUtils {
         }
         else
             return flag = false;
+    }
+
+    public static void switchToiFrame(String frameId){
+        driver.switchTo().frame(frameId);
     }
 
 

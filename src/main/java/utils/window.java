@@ -4,15 +4,19 @@ import org.openqa.selenium.WebDriver;
 
 public class window {
 
-    static WebDriver driver;
+    static DriverFactory driverFactory;
 
-    static{
-        driver = DriverFactory.getDriver();
+//    static{
+//        driver = DriverFactory.getDriver();
+//    }
+
+    public window(DriverFactory driverFactory){
+        driverFactory =  driverFactory;
     }
 
     //maximize window
     public static void maximizeWindow(){
 //        driver.manage().window().maximize();
-        driver.manage().window().fullscreen();
+        driverFactory.driver.manage().window().fullscreen();
     }
 }
