@@ -1,12 +1,16 @@
 Feature: Basic Actions
 
-  Scenario: Radio Buttons
+  Background:
     Given I open practise page
+
+  @radioButtons
+  Scenario: Radio Buttons
+#    Given I open practise page
     Then Practise page should be displayed
     When I click on "radio1" Radio button
     Then "radio1" button should be checked
 
-
+  @ScrollFunction
   Scenario: Scroll Function
     Given I open practise page
     Then Practise page should be displayed
@@ -57,9 +61,37 @@ Feature: Basic Actions
     When I click on Open Tab
     Then Verify if new tab is opened
 
-  @Smoke
+
   Scenario: Alert handling
     Given I open practise page
     When I enter alert name "Sagar"
     And Click on Alert button
     Then alert pop should be displayed with message "Hello Sagar, share this practice page and share your knowledge"
+
+  @webTableHandling
+  Scenario Outline: Web Table handling
+    When I scroll down to the course "<course>"
+    Then I should be able to see the "<course>" of the "<price>"
+    Examples:
+      | course                                     | price |
+      | WebServices / REST API Testing with SoapUI | 35    |
+
+
+  @dynamicHeaderWebTableHandling
+  Scenario Outline: Dynamic header web table handling
+    When I scroll down to the "<footballer>"
+    Then I should be able to see the "<footballer>" "<amount>"
+    Examples:
+      | footballer | amount |
+      | Ronaldo    | 31     |
+
+
+  @iframeHandling
+  Scenario: iframeHandling
+    When I switch to iframe
+    When I scroll down to "mentorship" tile in courses section
+    And I Click on mentorship tile
+    Then I should be able to see mentorship title
+
+
+

@@ -11,10 +11,19 @@ import org.testng.Assert;
 import pages.BasicActionPage;
 import pages.GooglePage;
 import utils.CommonUtils;
+import utils.DriverFactory;
 
 public class BasicActions {
 
-    BasicActionPage basicActionPage = new BasicActionPage();
+    private DriverFactory driverFactory;
+    private BasicActionPage basicActionPage;
+
+    public BasicActions(DriverFactory driverFactory){
+        this.driverFactory = driverFactory;
+        basicActionPage = new BasicActionPage(this.driverFactory.driver);
+
+    }
+
 
 
     @When("I open practise page")
@@ -140,5 +149,47 @@ public class BasicActions {
     @Then("alert pop should be displayed with message {string}")
     public void alertPopShouldBeDisplayedWithMessage(String expectedMessage) {
         basicActionPage.verifyAlertMessage(expectedMessage);
+    }
+
+    @When("I scroll down to the course {string}")
+    public void iScrollDownToTheCourse(String courseName) {
+        basicActionPage.scrollToTheCourse(courseName);
+    }
+
+    @Then("I should be able to see the {string} of the {string}")
+    public void iShouldBeAbleToSeeTheOfThe(String courseName, String price) {
+        basicActionPage.viewPrice(courseName, price);
+    }
+
+    @When("I scroll down to the {string}")
+    public void iScrollDownToThe(String footballer) {
+        basicActionPage.scrollToFootballer(footballer);
+    }
+
+    @Then("I should be able to see the {string} {string}")
+    public void iShouldBeAbleToSeeThe(String footballer, String amount) {
+        String actualAmount = basicActionPage.getAmount(footballer);
+        Assert.assertEquals(actualAmount, amount, "Actual amount is not matching with expected. Actual amount is --> "+actualAmount);
+    }
+
+    @When("I scroll down to {string} tile in courses section")
+    public void iScrollDownToTileInCoursesSection(String arg0) {
+        basicActionPage.scrollToMentorShipTile();
+    }
+
+    @Then("I should be able to see mentorship title")
+    public void iShouldBeAbleToSeeMentorshipTitle() {
+        Boolean actualFlag = basicActionPage.mentorShipTitleVisible();
+        Assert.assertTrue(actualFlag, "MentorShip Title is not visible");
+    }
+
+    @And("I Click on mentorship tile")
+    public void iClickOnMentorshipTile() {
+        basicActionPage.clickOnMentorShipTile();
+    }
+
+    @When("I switch to iframe")
+    public void iSwitchToIframe() {
+        basicActionPage.switchToIframe();
     }
 }

@@ -7,18 +7,29 @@ import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
-public class wait {
+public class WaitUtil {
 
-    static WebDriver driver;
-
-    static {
-        driver = DriverFactory.getDriver();
+    private static WebDriver driver;
+    
+    public static void init(WebDriver driverInstance) {
+        if (driver == null) {
+            driver = driverInstance;
+        }
     }
-
+    
     //explicit wait
-    public static void waitForElementToLoad(String xpath){
-        WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofMillis(3000) );
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
+    public static Boolean waitForElementToLoad(String xpath){
+        Boolean flag = null;
+        try{
+            WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofMillis(3000) );
+            webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));  
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+            throw new RuntimeException(xpath+" Element not loaded");
+        }finally {
+            return flag;
+        }
     }
 
     public static void waitForElementToLoad(By xpath){
