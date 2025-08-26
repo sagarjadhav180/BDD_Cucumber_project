@@ -192,4 +192,9 @@ public class BasicActions {
     public void iSwitchToIframe() {
         basicActionPage.switchToIframe();
     }
+
+    @Then("I should be able to view the {string} {string}")
+    public void iShouldBeAbleToViewThe(String footballer, String column) {
+        basicActionPage.getColumnValue(footballer, column);
+    }
 }

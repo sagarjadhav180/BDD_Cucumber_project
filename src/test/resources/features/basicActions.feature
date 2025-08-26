@@ -94,4 +94,14 @@ Feature: Basic Actions
     Then I should be able to see mentorship title
 
 
+  @dynamicHeaderWebTable
+  Scenario Outline: Dynamic web table handling
+    When I scroll down to the "<footballer>"
+    Then I should be able to view the "<footballer>" "<Amount>"
+    Examples:
+      | footballer | Amount |
+      | Ronaldo    | Amount |
+
+
+
 

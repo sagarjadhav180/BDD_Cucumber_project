@@ -210,6 +210,34 @@ public class BasicActionPage {
         CommonUtils.switchToiFrame(frameId);
     }
 
+    public void getColumnValue(String name, String columnName){
+        String columnValue;
+        int columnIndex = 0;
+        switch (columnName){
+            case "Name":
+                columnIndex = 1;
+                break;
+            case "Position":
+                columnIndex = 2;
+                break;
+            case "City":
+                columnIndex = 3;
+                break;
+            case "Amount":
+                columnIndex = 4;
+                break;
+        }
+        String table = "//div[@class='tableFixHead']";
+        String xpath = "//div[@class='tableFixHead']//thead//th[text()='Amount']//ancestor::thead//following-sibling::tbody//tr//td[position()=1 and text()='"+name+"']//parent::tr//td[position()="+columnIndex+"]";
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+
+        javascriptExecutor.executeScript("arguments[0].scrollIntoView(true)",driver.findElement(By.xpath(table)));
+
+        String value = driver.findElement(By.xpath(xpath)).getText();
+        System.out.println("Value ==> "+value);
+
+    }
+
 
 
 

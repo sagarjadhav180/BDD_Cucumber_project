@@ -39,7 +39,7 @@ Feature: CRUD operations
       | addMacbookEntry | Apple MacBook Pro 16 | 2020 | 1949.99 | Intel Core i9 | 1 TB           |
 
 
-#  @api_suite
+  @api_suite
   Scenario Outline: POST call using data from json file
     Given I make a "POST" request to create machine data using "<JSONFile>"
     Then I must get response code "200"

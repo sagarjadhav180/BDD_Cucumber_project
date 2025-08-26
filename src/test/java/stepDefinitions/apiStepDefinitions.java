@@ -4,27 +4,17 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import model.AppleMacBookDetails;
 import model.MachineDetails;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.Assert;
 import utils.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.List;
 import java.util.Map;
-
-import static com.aventstack.extentreports.reporter.configuration.ViewName.LOG;
 
 public class apiStepDefinitions {
 
@@ -44,7 +34,7 @@ public class apiStepDefinitions {
 
     @And("I must be able to see all the objects")
     public void iMustBeAbleToSeeAllTheObjects(DataTable dataTable) {
-        MachineDetails machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, MachineDetails.class);
+        MachineDetails machineDetail = ResponseHandler.deserializeResponse(httpHelper.response, MachineDetails.class);
         System.out.println("===============================");
         System.out.println(machineDetail);
         System.out.println("===============================");
@@ -78,7 +68,7 @@ public class apiStepDefinitions {
 
     @And("I must be able to see newly created object")
     public void iMustBeAbleToSeeNewlyCreatedObject(DataTable dataTable) {
-        AppleMacBookDetails machineDetails = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
+        AppleMacBookDetails machineDetails = ResponseHandler.deserializeResponse(httpHelper.response, AppleMacBookDetails.class);
         List<Map<String, String>> rows = dataTable.asMaps();
         for (Map<String, String> row : rows) {
             Assert.assertEquals(machineDetails.getName(), row.get("name"),
@@ -104,7 +94,7 @@ public class apiStepDefinitions {
         String payload = jsonReader.readFromJson(jsonFile);
         LOG.info("=====Payload====="+payload+"================");
         httpHelper.response = HTTPHelper.POST(payload, "objects");
-        AppleMacBookDetails machineDetail = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
+        AppleMacBookDetails machineDetail = ResponseHandler.deserializeResponse(httpHelper.response, AppleMacBookDetails.class);
         this.machineId = machineDetail.getId();
         LOG.info("=====Machine id===== "+this.machineId+" ================");
 
@@ -120,7 +110,7 @@ public class apiStepDefinitions {
         Map<String, String> map = excelReader.getData(ScenarioName);
         String payload = map.get("requestbody");
         httpHelper.response = HTTPHelper.POST(payload, "objects");
-        AppleMacBookDetails machineDetails = ResponseHandler.deserailizeResponse(httpHelper.response, AppleMacBookDetails.class);
+        AppleMacBookDetails machineDetails = ResponseHandler.deserializeResponse(httpHelper.response, AppleMacBookDetails.class);
         this.machineId = machineDetails.getId();
         LOG.info("====Machine id -> "+ this.machineId+" ======");
     }
