@@ -5,9 +5,10 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import utils.EmailUtil;
-
-import java.util.Arrays;
+import utils.PropertyReader;
+import utils.RetryAnalyzer;
 
 
 @CucumberOptions(
@@ -18,18 +19,22 @@ import java.util.Arrays;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "utils.Listener"
         },
-        monochrome = true,
-        tags = "@iframeHandling"
+        monochrome = false,
+        tags = "@json_file"
 )
 
+@Test(retryAnalyzer = RetryAnalyzer.class)
 public class TestRunner extends AbstractTestNGCucumberTests {
 
         private static final String reportPath = "target/report/ExtentPdf.pdf";
 
         @AfterSuite
         private void sendEmail(){
-                EmailUtil.sendReportEmail("sagar.jadhav180@gmail.com", reportPath);
-
+                if(PropertyReader.getProperty("mail.trigger").equals("true"))
+                        EmailUtil.sendReportEmail("sagar.jadhav180@gmail.com", reportPath);
+                else {
+                        System.out.println("📭 Email sending is disabled");
+                }
         }
 
         @DataProvider(parallel = true)
